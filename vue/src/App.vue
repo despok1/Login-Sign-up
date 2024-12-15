@@ -1,30 +1,70 @@
 <script setup lang="ts">
-import HelloWorld from './components/HelloWorld.vue'
+
 </script>
 
 <template>
-  <div>
-    <a href="https://vite.dev" target="_blank">
-      <img src="/vite.svg" class="logo" alt="Vite logo" />
-    </a>
-    <a href="https://vuejs.org/" target="_blank">
-      <img src="./assets/vue.svg" class="logo vue" alt="Vue logo" />
-    </a>
+  <div class="container">
+    <!-- Switcher -->
+    <section class="center-position">
+      <div class="row">
+        <div>
+          <span>LOG IN</span> <span class="micro-padding">SIGN UP</span>
+        </div>
+        <div class="form-check form-switch">
+          <input class="form-check-input" type="checkbox" role="switch" id="flexSwitchCheckDefault">
+        </div>
+      </div>
+    </section>
+    <section class="center-position">
+      <div class="block-form text-center">
+        <h4>Log In</h4>
+        <div>
+          <input type="email" name="logemail" class="form-style" placeholder="Your Email" id="logemail"
+            autocomplete="off">
+        </div>
+        <div>
+          <input type="password" name="logpass" class="form-style" placeholder="Your Password" id="logpass"
+            autocomplete="off">
+        </div>
+        <!-- Submit -->
+        <div>
+          <button class="button-submit-shiny button-submit">Submit</button>
+        </div>
+        <div class="forgot-password-shiny">Forgot your password?</div>
+      </div>
+      <!-- INPUTS -->
+    </section>
   </div>
-  <HelloWorld msg="Vite + Vue" />
 </template>
 
 <style scoped>
-.logo {
-  height: 6em;
-  padding: 1.5em;
-  will-change: filter;
-  transition: filter 300ms;
+.center-position {
+  display: flex;
+  justify-content: center;
+  align-items: center;
 }
-.logo:hover {
-  filter: drop-shadow(0 0 2em #646cffaa);
+
+.micro-padding {
+  padding-left: 30px;
 }
-.logo.vue:hover {
-  filter: drop-shadow(0 0 2em #42b883aa);
+
+.block-form {
+  width: 400px;
+  /* height: 350px; */
+  background: #343541;
+}
+
+.forgot-password-shiny:hover {
+  color: yellow;
+}
+
+.button-submit-shiny:hover {
+  background-color: rgb(33, 60, 133);
+}
+
+.button-submit {
+  border-radius: 10px 10px 10px 10px;
+  -webkit-border-radius: 10px 10px 10px 10px;
+  -moz-border-radius: 10px 10px 10px 10px;
 }
 </style>

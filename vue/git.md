@@ -1,0 +1,2 @@
+cntr + c
+git add .
