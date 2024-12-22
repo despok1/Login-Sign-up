@@ -5,6 +5,8 @@ name = "pypi"
 
 [packages]
 pymongo = "*"
+uvicorn = {extras = ["standard"], version = "*"}
+fastapi = {extras = ["standard"], version = "*"}
 
 [dev-packages]
 

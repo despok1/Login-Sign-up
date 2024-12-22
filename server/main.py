@@ -1,29 +1,35 @@
-from pymongo.mongo_client import MongoClient
-from pymongo.server_api import ServerApi
-uri = "mongodb+srv://telebot:198219821@cluster0.t0qiw.mongodb.net/?retryWrites=true&w=majority&appName=Cluster0"
-client = MongoClient(uri, server_api=ServerApi('1'))
-db = client["login-sign-up"]
-users_collection = db["users"]
+from database import Database
+from typing import Union
+from fastapi import FastAPI
+from pydantic import BaseModel
+# run server: uvicorn main:app
+# run server:  fastapi dev main.py
 
-full_name = "damir1"
-email = "damir@gmail.com1"
-password = "damir1231"
+class RegisterRequest(BaseModel):
+    user_email: str
+    password: str
+    full_name: str
 
-def save_user_db(full_name,email,password):
-    users_collection.insert_one({
-        "full_name" : full_name,
-        "email" : email,
-        "password" : password,
-        })
+class LoginRequest(BaseModel):
+    user_email: str
+    password: str
 
-
-def check_user_in_db(email):
-    result = users_collection.find_one({ "email" : email })
-    print(result)
-    if result: return True
-    else: return False
     
-check = check_user_in_db(email)  
-if check == False:  
-    save_user_db(full_name,email,password)
     
+    
+app = FastAPI()
+
+
+@app.post("/register")
+def register(request: RegisterRequest):
+    database = Database(user_email=request.user_email, password=request.password,full_name=request.full_name)
+    result = database.registration()
+    return { "user_exist": result}
+
+@app.post("/login")
+def login(request: LoginRequest):
+    database = Database(user_email=request.user_email, password=request.password, full_name="")
+    result = database.check_user_for_login(user_email=request.user_email, password=request.password)
+    return result
+
+
