@@ -38,33 +38,5 @@
 </template>
 
 <style scoped>
-.center-position {
-  display: flex;
-  justify-content: center;
-  align-items: center;
-}
 
-.micro-padding {
-  padding-left: 30px;
-}
-
-.block-form {
-  width: 400px;
-  /* height: 350px; */
-  background: #343541;
-}
-
-.forgot-password-shiny:hover {
-  color: yellow;
-}
-
-.button-submit-shiny:hover {
-  background-color: rgb(33, 60, 133);
-}
-
-.button-submit {
-  border-radius: 10px 10px 10px 10px;
-  -webkit-border-radius: 10px 10px 10px 10px;
-  -moz-border-radius: 10px 10px 10px 10px;
-}
 </style>
