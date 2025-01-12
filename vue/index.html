@@ -1,16 +1,25 @@
 <!doctype html>
 <html lang="en">
-  <head>
-    <meta charset="UTF-8" />
-    <link rel="icon" type="image/svg+xml" href="/vite.svg" />
-    <link rel="stylesheet" href="./node_modules/bootstrap/dist/css/bootstrap.min.css">
-    <link rel="stylesheet" href="https://unicons.iconscout.com/release/v2.1.9/css/unicons.css">
-    <meta name="viewport" content="width=device-width, initial-scale=1.0" />
-    <title>Vite + Vue + TS</title>
-  </head>
-  <body>
-    
 
-    <script type="module" src="/src/main.ts"></script>
-  </body>
+<head>
+  <meta charset="UTF-8" />
+  <link rel="icon" type="image/svg+xml" href="/download-removebg-preview" />
+  <link rel="stylesheet" href="./node_modules/bootstrap/dist/css/bootstrap.min.css">
+  <link rel="stylesheet" href="https://unicons.iconscout.com/release/v2.1.9/css/unicons.css">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+  <script src="https://accounts.google.com/gsi/client" defer async></script>
+  <title>Log-in Sing-up</title>
+</head>
+
+<body>
+
+  <!-- load google button -->
+  <div id="g_id_onload" class="hidden"
+    data-client_id="360444884335-299hul0pnn7g3c5f92kg63r77jk3k0ug.apps.googleusercontent.com"
+    data-login_uri="http://localhost:8000/google_login" data-auto_prompt="false">
+  </div>
+  <div id="app"></div>
+  <script type="module" src="/src/main.ts"></script>
+</body>
+
 </html>

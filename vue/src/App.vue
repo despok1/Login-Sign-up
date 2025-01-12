@@ -12,8 +12,8 @@ onMounted(() => {
   let submitButtonLogIn = document.querySelector(".button-submit-login")
   let submitButtonSignUp = document.querySelector(".button-submit-signup")
 
-  
-  submitButtonLogIn.onclick = function(){
+
+  submitButtonLogIn.onclick = function () {
     // console.log(inputEmailLogIn.value.length);  
     // if (inputEmailLogIn.value != "") {
     //   console.log("noPysta");
@@ -22,29 +22,30 @@ onMounted(() => {
       console.log("noPysta23");
       inputPasswordLogIn.classList.add("green")
     }
-    else{
+    else {
       console.log("dd");
       inputPasswordLogIn.classList.add("red")
     }
   }
 
-  submitButtonSignUp.onclick = function(){
-    
+  submitButtonSignUp.onclick = function () {
+
   }
 
-  switcher.onclick = function(){
+  switcher.onclick = function () {
     logIn.classList.toggle("opacity-0")
     signUp.classList.toggle("opacity-0")
   }
-  
 
 
 
-})
+
+});
 </script>
 
 <template>
   <div class="container content2">
+ 
 
     <!-- Switcher -->
     <section class="center-position pb-5">
@@ -65,25 +66,28 @@ onMounted(() => {
           <h4 class="pb-4 log-in-font-size"><strong>Sign Up</strong></h4>
           <!-- Your Full Name -->
           <div class="pb-2 position-relative">
-            <input type="submit" name="logemail" class="form-style inputs sign-up-input-name" placeholder="Your Name" id="logemail"
-              autocomplete="off">
+            <input type="submit" name="logemail" class="form-style inputs sign-up-input-name" placeholder="Your Name"
+              id="logemail" autocomplete="off">
             <i class="input-icon uil uil-user"></i>
           </div>
           <!-- Your Email -->
           <div class="pb-2 position-relative">
-            <input type="email" name="logemail" class="form-style inputs sign-up-input-email" placeholder="Your Email" id="logemail2"
-              autocomplete="off">
+            <input type="email" name="logemail" class="form-style inputs sign-up-input-email" placeholder="Your Email"
+              id="logemail2" autocomplete="off">
             <i class="input-icon uil uil-at"></i>
           </div>
           <!-- Your Password -->
           <div class="pb-4 position-relative">
-            <input type="password" name="logpass" class="form-style inputs sign-up-input-password" placeholder="Your Password" id="logpass2"
-              autocomplete="off">
+            <input type="password" name="logpass" class="form-style inputs sign-up-input-password"
+              placeholder="Your Password" id="logpass2" autocomplete="off">
             <i class="input-icon uil uil-lock-alt"></i>
           </div>
           <!-- Submit -->
           <div class="pb-4">
             <button class="button-submit-shiny button-submit button-submit-signup"><strong>Submit</strong></button>
+          </div>
+          <div class="g_id_signin button_google" data-type="standard" data-size="large" data-theme="filled_black"
+            data-text="sign_in_with" data-shape="circle" data-logo_alignment="right">
           </div>
         </div>
       </div>
@@ -96,14 +100,14 @@ onMounted(() => {
           <h4 class="pb-4 log-in-font-size"><strong>Log In</strong></h4>
           <!-- Your Email -->
           <div class="pb-2 position-relative">
-            <input type="email" name="logemail" class="form-style inputs log-in-input-email" placeholder="Your Email" id="logemail1"
-              autocomplete="off">
+            <input type="email" name="logemail" class="form-style inputs log-in-input-email" placeholder="Your Email"
+              id="logemail1" autocomplete="off">
             <i class="input-icon uil uil-at"></i>
           </div>
           <!-- Your Password -->
           <div class="pb-4 position-relative">
-            <input type="password" name="logpass" class="form-style inputs log-in-input-password" placeholder="Your Password" id="logpass1"
-              autocomplete="off">
+            <input type="password" name="logpass" class="form-style inputs log-in-input-password"
+              placeholder="Your Password" id="logpass1" autocomplete="off">
             <i class="input-icon uil uil-lock-alt"></i>
           </div>
           <!-- Submit -->
@@ -112,14 +116,25 @@ onMounted(() => {
           </div>
           <!-- Forgot your password? -->
           <div class="forgot-password">Forgot your password?</div>
+
+
+          <div class="g_id_signin button_google" data-type="standard" data-size="large" data-theme="filled_black"
+            data-text="sign_in_with" data-shape="circle" data-logo_alignment="right">
+          </div>
         </div>
       </div>
     </section>
-
   </div>
+
 </template>
 
 <style scoped>
+.button_google {
+  height: 40px;
+  position: relative;
+  z-index: 1001;
+}
+
 .center-position {
   display: flex;
   justify-content: center;
@@ -155,7 +170,6 @@ onMounted(() => {
 
 .block-form {
   max-width: 30%;
-  height: 320px;
   background: #2a2b38;
   background-image: url('https://s3-us-west-2.amazonaws.com/s.cdpn.io/1462889/pat.svg');
   border-radius: 5px;
@@ -165,12 +179,14 @@ onMounted(() => {
 }
 
 .forgot-password {
+  margin: 0 0 1rem 0;
   font-size: 12px;
   transition: 1s;
 }
 
 .forgot-password:hover {
   color: #ffeba7;
+  cursor: pointer;
 }
 
 .button-submit {
@@ -220,9 +236,10 @@ onMounted(() => {
 }
 
 .form-check-input:checked {
-    background-color: #ffeba7;
-    border-color: #1f2029;
+  background-color: #ffeba7;
+  border-color: #1f2029;
 }
+
 .form-check-input {
   background-color: #ffeba7;
   border-color: #1f2029;
@@ -234,17 +251,19 @@ onMounted(() => {
 }
 
 .form-switch .form-check-input {
-    --bs-form-switch-bg: url(./assets/ArrowUpLeft.svg);
+  --bs-form-switch-bg: url(./assets/ArrowUpLeft.svg);
 }
 
 .form-switch .form-check-input:checked {
-    --bs-form-switch-bg: url(./assets/ArrowUpRight.svg);
+  --bs-form-switch-bg: url(./assets/ArrowUpRight.svg);
 }
-.red{
+
+.red {
   color: red;
   border: 2px solid red;
 }
-.green{
+
+.green {
   color: green;
   border: 2px solid green;
 }

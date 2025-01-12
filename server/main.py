@@ -19,13 +19,13 @@ class LoginRequest(BaseModel):
     
 app = FastAPI()
 
-
+# Regestration
 @app.post("/register")
 def register(request: RegisterRequest):
     database = Database(user_email=request.user_email, password=request.password,full_name=request.full_name)
     result = database.registration()
     return { "user_exist": result}
-
+# Login
 @app.post("/login")
 def login(request: LoginRequest):
     database = Database(user_email=request.user_email, password=request.password, full_name="")
