@@ -81,7 +81,7 @@ onMounted(() => {
     signUp.classList.toggle("opacity-0")
   }
 
-})
+});
 
 
 
