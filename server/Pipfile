@@ -7,6 +7,8 @@ name = "pypi"
 pymongo = "*"
 uvicorn = {extras = ["standard"], version = "*"}
 fastapi = {extras = ["standard"], version = "*"}
+google-auth = "*"
+requests = "*"
 
 [dev-packages]
 

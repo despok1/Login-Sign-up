@@ -91,6 +91,7 @@ onMounted(() => {
 <template>
   <div class="container content2">
 
+
     <!-- Switcher -->
     <section class="center-position pb-5">
       <div class="row">
@@ -131,6 +132,9 @@ onMounted(() => {
           <div class="pb-4">
             <button class="button-submit-shiny button-submit button-submit-signup"><strong>Submit</strong></button>
           </div>
+          <div class="g_id_signin button_google" data-type="standard" data-size="large" data-theme="filled_black"
+            data-text="sign_in_with" data-shape="circle" data-logo_alignment="right">
+          </div>
         </div>
       </div>
     </section>
@@ -159,14 +163,25 @@ onMounted(() => {
           </div>
           <!-- Forgot your password? -->
           <div class="forgot-password">Forgot your password?</div>
+
+
+          <div class="g_id_signin button_google" data-type="standard" data-size="large" data-theme="filled_black"
+            data-text="sign_in_with" data-shape="circle" data-logo_alignment="right">
+          </div>
         </div>
       </div>
     </section>
-
   </div>
+
 </template>
 
 <style scoped>
+.button_google {
+  height: 40px;
+  position: relative;
+  z-index: 1001;
+}
+
 .center-position {
   display: flex;
   justify-content: center;
@@ -212,12 +227,14 @@ onMounted(() => {
 }
 
 .forgot-password {
+  margin: 0 0 1rem 0;
   font-size: 12px;
   transition: 1s;
 }
 
 .forgot-password:hover {
   color: #ffeba7;
+  cursor: pointer;
 }
 
 .button-submit {

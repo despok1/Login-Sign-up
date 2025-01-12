@@ -4,7 +4,7 @@ import hashlib
 
 
 class Database:
-    # конструктор
+    # конструктор хранитель глобальних перемених
     def __init__(self,user_email:str,password:str,full_name:str):
         self.uri = "mongodb+srv://telebot:198219821@cluster0.t0qiw.mongodb.net/?retryWrites=true&w=majority&appName=Cluster0"
         self.client = MongoClient(self.uri, server_api=ServerApi('1'))
@@ -16,9 +16,11 @@ class Database:
         self.password = password
         self.result = None
         
+    # Шифруем пароли 
     def encrypt(self):    
         self.hash_sha512 = hashlib.sha512(self.password.encode()).hexdigest()    
         
+    # Сохроняем юзера в базу даних
     def save_user_db(self):
         self.encrypt()
         self.users_collection.insert_one({
@@ -27,12 +29,13 @@ class Database:
             "password" : self.hash_sha512,
             })
 
-
+    # проверка юзера в базе даних
     def check_user_in_db(self):
         self.result = self.users_collection.find_one({ "email" : self.email })
         if self.result: return False
         else: return True
         
+    # проверка даних юзера (login) 
     def check_user_for_login(self,user_email:str,password:str):
         user_obj = self.users_collection.find_one({ "email" : user_email })
         isUserLogined = False
@@ -43,7 +46,8 @@ class Database:
                 isUserLogined = True
 
         return isUserLogined
-            
+    
+    # регистрация
     def registration(self):
         check = self.check_user_in_db()  
 
