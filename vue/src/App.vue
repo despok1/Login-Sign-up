@@ -1,5 +1,18 @@
 <script setup>
 import { onMounted } from 'vue';
+
+function checkInput(input) {
+  if (input.value.length >= 8 && input.value != "") {
+    input.classList.add("green-border");
+  }
+  else {
+    input.classList.remove("green-border")
+    input.classList.add("red-border");
+  }
+}
+
+
+
 onMounted(() => {
   let logIn = document.querySelector(".log-in-form");
   let signUp = document.querySelector(".sign-up-form");
@@ -11,36 +24,68 @@ onMounted(() => {
   let inputPasswordLogIn = document.querySelector(".log-in-input-password")
   let submitButtonLogIn = document.querySelector(".button-submit-login")
   let submitButtonSignUp = document.querySelector(".button-submit-signup")
+  let hiddenText = document.querySelector(".hidden-text")
+  let hiddenText2 = document.querySelector(".hidden-text-2")
 
-  
-  submitButtonLogIn.onclick = function(){
-    // console.log(inputEmailLogIn.value.length);  
-    // if (inputEmailLogIn.value != "") {
-    //   console.log("noPysta");
-    // }
-    if (inputPasswordLogIn.value.length >= 8) {
-      console.log("noPysta23");
-      inputPasswordLogIn.classList.add("green")
+
+  submitButtonLogIn.onclick = function () {
+
+    // ? Проверка Email в Лог-Ин
+    checkInput(inputEmailLogIn)
+
+
+    // Проверка Пароля в Лог-Ин
+    checkInput(inputPasswordLogIn)
+
+    // Добавляем надпись Correct/Uncorrect
+    if (inputPasswordLogIn.value.length >= 8 && inputPasswordLogIn.value != "" && inputEmailLogIn.value.length >= 8 && inputEmailLogIn.value != "") {
+      hiddenText.classList.add("green")
+      hiddenText.innerText = 'Correct!';
     }
-    else{
-      console.log("dd");
-      inputPasswordLogIn.classList.add("red")
+    else {
+      hiddenText.classList.remove("green")
+      hiddenText.classList.add("red");
+      hiddenText.innerText = 'Uncorrect!';
     }
+
   }
 
-  submitButtonSignUp.onclick = function(){
-    
+  submitButtonSignUp.onclick = function () {
+
+    // Проверка Имя в Sign-Up
+    checkInput(inputNameSignUp)
+
+    // ? Проверка Email в Sign-Up
+    checkInput(inputEmailSignUp)
+
+
+    // Проверка Пароля в Sign-Up
+    checkInput(inputPasswordSignUp)
+
+    // Добавляем надпись Correct/Uncorrect
+    if (inputPasswordSignUp.value.length >= 8 && inputPasswordSignUp.value != "" && inputEmailSignUp.value.length >= 8 && inputEmailSignUp.value != "" && inputNameSignUp.value.length >= 8 && inputNameSignUp.value != "") {
+      hiddenText2.classList.add("green")
+      hiddenText2.innerText = 'Correct!';
+    }
+    else {
+      hiddenText2.classList.remove("green")
+      hiddenText2.classList.add("red");
+      hiddenText2.innerText = 'Uncorrect!';
+    }
+
+
   }
 
-  switcher.onclick = function(){
+  switcher.onclick = function () {
     logIn.classList.toggle("opacity-0")
     signUp.classList.toggle("opacity-0")
   }
-  
-
-
 
 })
+
+
+
+
 </script>
 
 <template>
@@ -65,22 +110,23 @@ onMounted(() => {
           <h4 class="pb-4 log-in-font-size"><strong>Sign Up</strong></h4>
           <!-- Your Full Name -->
           <div class="pb-2 position-relative">
-            <input type="submit" name="logemail" class="form-style inputs sign-up-input-name" placeholder="Your Name" id="logemail"
-              autocomplete="off">
+            <input type="text" name="logemail" class="form-style inputs sign-up-input-name" placeholder="Your Name"
+              id="logemail" autocomplete="off">
             <i class="input-icon uil uil-user"></i>
           </div>
           <!-- Your Email -->
           <div class="pb-2 position-relative">
-            <input type="email" name="logemail" class="form-style inputs sign-up-input-email" placeholder="Your Email" id="logemail2"
-              autocomplete="off">
+            <input type="email" name="logemail" class="form-style inputs sign-up-input-email" placeholder="Your Email"
+              id="logemail2" autocomplete="off">
             <i class="input-icon uil uil-at"></i>
           </div>
           <!-- Your Password -->
           <div class="pb-4 position-relative">
-            <input type="password" name="logpass" class="form-style inputs sign-up-input-password" placeholder="Your Password" id="logpass2"
-              autocomplete="off">
+            <input type="password" name="logpass" class="form-style inputs sign-up-input-password"
+              placeholder="Your Password" id="logpass2" autocomplete="off">
             <i class="input-icon uil uil-lock-alt"></i>
           </div>
+          <div class="hidden-text-2"></div>
           <!-- Submit -->
           <div class="pb-4">
             <button class="button-submit-shiny button-submit button-submit-signup"><strong>Submit</strong></button>
@@ -96,18 +142,19 @@ onMounted(() => {
           <h4 class="pb-4 log-in-font-size"><strong>Log In</strong></h4>
           <!-- Your Email -->
           <div class="pb-2 position-relative">
-            <input type="email" name="logemail" class="form-style inputs log-in-input-email" placeholder="Your Email" id="logemail1"
-              autocomplete="off">
+            <input type="email" name="logemail" class="form-style inputs log-in-input-email" placeholder="Your Email"
+              id="logemail1" autocomplete="off">
             <i class="input-icon uil uil-at"></i>
           </div>
           <!-- Your Password -->
-          <div class="pb-4 position-relative">
-            <input type="password" name="logpass" class="form-style inputs log-in-input-password" placeholder="Your Password" id="logpass1"
-              autocomplete="off">
+          <div class="position-relative">
+            <input type="password" name="logpass" class="form-style inputs log-in-input-password"
+              placeholder="Your Password" id="logpass1" autocomplete="off">
             <i class="input-icon uil uil-lock-alt"></i>
           </div>
+          <div class="hidden-text mb-4"></div>
           <!-- Submit -->
-          <div class="pb-4">
+          <div class="pb-5">
             <button class="button-submit-shiny button-submit button-submit-login"><strong>Submit</strong></button>
           </div>
           <!-- Forgot your password? -->
@@ -155,7 +202,7 @@ onMounted(() => {
 
 .block-form {
   max-width: 30%;
-  height: 320px;
+  /* height: 320px; */
   background: #2a2b38;
   background-image: url('https://s3-us-west-2.amazonaws.com/s.cdpn.io/1462889/pat.svg');
   border-radius: 5px;
@@ -209,7 +256,7 @@ onMounted(() => {
   color: #ffeba7;
   position: absolute;
   left: 7%;
-  bottom: 57%;
+  bottom: 30%;
 }
 
 .opacity-0 {
@@ -220,9 +267,10 @@ onMounted(() => {
 }
 
 .form-check-input:checked {
-    background-color: #ffeba7;
-    border-color: #1f2029;
+  background-color: #ffeba7;
+  border-color: #1f2029;
 }
+
 .form-check-input {
   background-color: #ffeba7;
   border-color: #1f2029;
@@ -234,18 +282,28 @@ onMounted(() => {
 }
 
 .form-switch .form-check-input {
-    --bs-form-switch-bg: url(./assets/ArrowUpLeft.svg);
+  --bs-form-switch-bg: url(./assets/ArrowUpLeft.svg);
 }
 
 .form-switch .form-check-input:checked {
-    --bs-form-switch-bg: url(./assets/ArrowUpRight.svg);
+  --bs-form-switch-bg: url(./assets/ArrowUpRight.svg);
 }
-.red{
-  color: red;
-  border: 2px solid red;
+
+.red-border {
+  color: rgba(255, 0, 0, 0.7);
+  border: 2px solid rgba(255, 0, 0, 0.7);
 }
-.green{
-  color: green;
-  border: 2px solid green;
+
+.red {
+  color: rgba(255, 0, 0, 0.7);
+}
+
+.green-border {
+  color: rgba(0, 128, 0, 0.7);
+  border: 2px solid rgba(0, 128, 0, 0.7);
+}
+
+.green {
+  color: rgba(0, 128, 0, 0.7);
 }
 </style>
