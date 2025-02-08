@@ -9,6 +9,11 @@ uvicorn = {extras = ["standard"], version = "*"}
 fastapi = {extras = ["standard"], version = "*"}
 google-auth = "*"
 requests = "*"
+itsdangerous = "*"
+flask = "*"
+flask-cors = "*"
+google-auth-oauthlib = "*"
+google-auth-httplib2 = "*"
 
 [dev-packages]
 

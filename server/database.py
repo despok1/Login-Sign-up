@@ -55,5 +55,4 @@ class Database:
             self.save_user_db()
             
         return check
-        
 

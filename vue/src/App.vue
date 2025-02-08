@@ -26,6 +26,11 @@ onMounted(() => {
   let submitButtonSignUp = document.querySelector(".button-submit-signup")
   let hiddenText = document.querySelector(".hidden-text")
   let hiddenText2 = document.querySelector(".hidden-text-2")
+  let script = document.createElement("script");
+  script.src = "https://accounts.google.com/gsi/client";
+  script.async = true;
+  script.defer = true;
+  document.head.appendChild(script);
 
 
   submitButtonLogIn.onclick = function () {
