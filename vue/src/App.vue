@@ -1,31 +1,36 @@
 <script setup>
-import { onMounted } from 'vue';
+import { onMounted, ref } from 'vue';
 
-function checkInput(input) {
-  if (input.value.length >= 8 && input.value != "") {
-    input.classList.add("green-border");
-  }
-  else {
-    input.classList.remove("green-border")
-    input.classList.add("red-border");
-  }
+const loginServerURL = 'http://localhost:8000/login';
+const registerServerURL = 'http://localhost:8000/register';
+
+let status = false;
+
+import { postData, checkInput, swapClasses, styleRemover, clearInputs } from './ts/helpers';
+
+let logInCard = ref();
+let signUpCard = ref();
+let inputNameSignUp = ref()
+let inputEmailSignUp = ref()
+let inputPasswordSignUp = ref()
+let inputEmailLogIn = ref()
+let inputPasswordLogIn = ref()
+let submitButtonLogIn = ref()
+let submitButtonSignUp = ref()
+let hiddenText = ref()
+let hiddenText2 = ref()
+
+function rotateForm() {
+  logInCard.value.classList.toggle("opacity-0")
+  signUpCard.value.classList.toggle("opacity-0")
 }
 
 
-
 onMounted(() => {
-  let logIn = document.querySelector(".log-in-form");
-  let signUp = document.querySelector(".sign-up-form");
-  let switcher = document.querySelector(".form-check-input")
-  let inputNameSignUp = document.querySelector(".sign-up-input-name")
-  let inputEmailSignUp = document.querySelector(".sign-up-input-email")
-  let inputPasswordSignUp = document.querySelector(".sign-up-input-password")
-  let inputEmailLogIn = document.querySelector(".log-in-input-email")
-  let inputPasswordLogIn = document.querySelector(".log-in-input-password")
-  let submitButtonLogIn = document.querySelector(".button-submit-login")
-  let submitButtonSignUp = document.querySelector(".button-submit-signup")
-  let hiddenText = document.querySelector(".hidden-text")
-  let hiddenText2 = document.querySelector(".hidden-text-2")
+  /* заменить на ref */
+// done
+
+
 
 
   submitButtonLogIn.onclick = function () {
@@ -33,14 +38,14 @@ onMounted(() => {
     // ? Проверка Email в Лог-Ин
     checkInput(inputEmailLogIn)
 
-
     // Проверка Пароля в Лог-Ин
     checkInput(inputPasswordLogIn)
 
     // Добавляем надпись Correct/Uncorrect
     if (inputPasswordLogIn.value.length >= 8 && inputPasswordLogIn.value != "" && inputEmailLogIn.value.length >= 8 && inputEmailLogIn.value != "") {
       hiddenText.classList.add("green")
-      hiddenText.innerText = 'Correct!';
+      hiddenText.innerText = 'Loging you in, please wait...';
+      status = true
     }
     else {
       hiddenText.classList.remove("green")
@@ -48,7 +53,40 @@ onMounted(() => {
       hiddenText.innerText = 'Uncorrect!';
     }
 
-  }
+
+    let logInData = {
+      "user_email": inputEmailLogIn.value,
+      "password": inputPasswordLogIn.value
+    };
+
+
+    if (status) {
+      let promiseForResult = postData(loginServerURL, logInData);
+      // console.log("Data has been send");
+      submitButtonLogIn.disabled = true
+
+      promiseForResult.then((data) => {
+        if (data.isLoginSuccess == false) {
+          hiddenText.innerText = 'You aren`t registered';
+
+          swapClasses(hiddenText, "green", "red")
+          styleRemover(inputEmailLogIn)
+          styleRemover(inputPasswordLogIn)
+
+          clearInputs([inputEmailLogIn, inputPasswordLogIn])
+
+          submitButtonLogIn.disabled = false
+          status = false
+        }
+      })
+    }
+    else {
+      console.log("Error sending data");
+    }
+  };
+
+
+
 
   submitButtonSignUp.onclick = function () {
 
@@ -73,13 +111,25 @@ onMounted(() => {
       hiddenText2.innerText = 'Uncorrect!';
     }
 
+    let signUpData = {
+      "user_email": "string",
+      "password": "string",
+      "full_name": "string"
+    };
+
+    signUpData.user_email = inputEmailSignUp.value;
+    signUpData.password = inputPasswordSignUp.value;
+    signUpData.full_name = inputNameSignUp.value;
+    // console.log(signUpValue);
+
+
+    postData(registerServerURL, signUpData);
+
+
 
   }
 
-  switcher.onclick = function () {
-    logIn.classList.toggle("opacity-0")
-    signUp.classList.toggle("opacity-0")
-  }
+
 
 });
 
@@ -99,38 +149,38 @@ onMounted(() => {
           <span><strong>LOG IN</strong></span> <span class="micro-padding"><strong>SIGN UP</strong></span>
         </div>
         <div class="form-check form-switch center-position">
-          <input class="form-check-input" type="checkbox" role="switch" id="flexSwitchCheckDefault">
+          <input @click="rotateForm" class="form-check-input" type="checkbox" role="switch" id="flexSwitchCheckDefault">
         </div>
       </div>
     </section>
 
     <!-- Sign Up -->
-    <section class="center-position sign-up-form opacity-0">
+    <section ref="signUpCard" class="center-position sign-up-form opacity-0">
       <div class="container block-form text-center">
         <div class="row content">
           <h4 class="pb-4 log-in-font-size"><strong>Sign Up</strong></h4>
           <!-- Your Full Name -->
           <div class="pb-2 position-relative">
-            <input type="text" name="logemail" class="form-style inputs sign-up-input-name" placeholder="Your Name"
+            <input ref="inputNameSignUp" type="text" name="logemail" class="form-style inputs" placeholder="Your Name"
               id="logemail" autocomplete="off">
             <i class="input-icon uil uil-user"></i>
           </div>
           <!-- Your Email -->
           <div class="pb-2 position-relative">
-            <input type="email" name="logemail" class="form-style inputs sign-up-input-email" placeholder="Your Email"
+            <input ref="inputEmailSignUp" type="email" name="logemail" class="form-style inputs" placeholder="Your Email"
               id="logemail2" autocomplete="off">
             <i class="input-icon uil uil-at"></i>
           </div>
           <!-- Your Password -->
-          <div class="pb-4 position-relative">
-            <input type="password" name="logpass" class="form-style inputs sign-up-input-password"
+          <div class="pb-2 position-relative">
+            <input ref="inputPasswordSignUp" type="password" name="logpass" class="form-style inputs"
               placeholder="Your Password" id="logpass2" autocomplete="off">
-            <i class="input-icon uil uil-lock-alt"></i>
+            <i class="input-icon uil uil-lock-alt top-55"></i>
           </div>
-          <div class="hidden-text-2"></div>
+          <div ref="hiddenText2" class="mb-3"></div>
           <!-- Submit -->
-          <div class="pb-4">
-            <button class="button-submit-shiny button-submit button-submit-signup"><strong>Submit</strong></button>
+          <div class="pb-2">
+            <button ref="submitButtonSignUp" class="button-submit-shiny button-submit"><strong>Submit</strong></button>
           </div>
           <div class="g_id_signin button_google" data-type="standard" data-size="large" data-theme="filled_black"
             data-text="sign_in_with" data-shape="circle" data-logo_alignment="right">
@@ -140,26 +190,26 @@ onMounted(() => {
     </section>
 
     <!-- Log In Block -->
-    <section class="center-position log-in-form">
+    <section ref="logInCard" class="center-position log-in-form">
       <div class="container block-form text-center">
         <div class="row content">
           <h4 class="pb-4 log-in-font-size"><strong>Log In</strong></h4>
           <!-- Your Email -->
           <div class="pb-2 position-relative">
-            <input type="email" name="logemail" class="form-style inputs log-in-input-email" placeholder="Your Email"
+            <input ref="inputEmailLogIn" type="email" name="logemail" class="form-style inputs" placeholder="Your Email"
               id="logemail1" autocomplete="off">
             <i class="input-icon uil uil-at"></i>
           </div>
           <!-- Your Password -->
-          <div class="position-relative">
-            <input type="password" name="logpass" class="form-style inputs log-in-input-password"
+          <div class="pb-2 position-relative">
+            <input ref="inputPasswordLogIn" type="password" name="logpass" class="form-style inputs"
               placeholder="Your Password" id="logpass1" autocomplete="off">
             <i class="input-icon uil uil-lock-alt"></i>
           </div>
-          <div class="hidden-text mb-4"></div>
+          <div ref="hiddenText" class="mb-3"></div>
           <!-- Submit -->
-          <div class="pb-5">
-            <button class="button-submit-shiny button-submit button-submit-login"><strong>Submit</strong></button>
+          <div class="pb-2">
+            <button ref="submitButtonLogIn" class="button-submit-shiny button-submit"><strong>Submit</strong></button>
           </div>
           <!-- Forgot your password? -->
           <div class="forgot-password">Forgot your password?</div>
@@ -269,11 +319,15 @@ onMounted(() => {
   bottom: 39%;
 }
 
-.uil-lock-alt::before {
+.uil-lock-alt:before {
   color: #ffeba7;
   position: absolute;
   left: 7%;
-  bottom: 30%;
+  bottom: 40%;
+}
+
+.top-55:before {
+  bottom: 40%;
 }
 
 .opacity-0 {
