@@ -1,10 +1,11 @@
-<script setup>
+<script setup lang="ts">
 import { onMounted, ref } from 'vue';
 
 const loginServerURL = 'http://localhost:8000/login';
 const registerServerURL = 'http://localhost:8000/register';
 
 let status = false;
+let status2 = false
 
 import { postData, checkInput, swapClasses, styleRemover, clearInputs } from './ts/helpers';
 
@@ -27,59 +28,62 @@ function rotateForm() {
 
 
 onMounted(() => {
-  
-  let script = document.createElement("script");
-  script.src = "https://accounts.google.com/gsi/client";
-  script.async = true;
-  script.defer = true;
-  document.head.appendChild(script);
+
+  // let script = document.createElement("script");
+  // script.src = "https://accounts.google.com/gsi/client";
+  // script.async = true;
+  // script.defer = true;
+  // document.head.appendChild(script);
 
 
 
 
-  submitButtonLogIn.onclick = function () {
+
+  submitButtonLogIn.value.onclick = function () {
 
     // ? Проверка Email в Лог-Ин
-    checkInput(inputEmailLogIn)
+    checkInput(inputEmailLogIn.value)
 
     // Проверка Пароля в Лог-Ин
-    checkInput(inputPasswordLogIn)
+    checkInput(inputPasswordLogIn.value)
 
     // Добавляем надпись Correct/Uncorrect
-    if (inputPasswordLogIn.value.length >= 8 && inputPasswordLogIn.value != "" && inputEmailLogIn.value.length >= 8 && inputEmailLogIn.value != "") {
-      hiddenText.classList.add("green")
-      hiddenText.innerText = 'Loging you in, please wait...';
+    if (inputPasswordLogIn.value.value.length >= 8 && inputPasswordLogIn.value.value != "" && inputEmailLogIn.value.value.length >= 8 && inputEmailLogIn.value.value != "") {
+      hiddenText.value.classList.add("green")
+      hiddenText.value.innerText = 'Loging you in, please wait...';
       status = true
     }
     else {
-      hiddenText.classList.remove("green")
-      hiddenText.classList.add("red");
-      hiddenText.innerText = 'Uncorrect!';
+      hiddenText.value.classList.remove("green")
+      hiddenText.value.classList.add("red");
+      hiddenText.value.innerText = 'Uncorrect!';
     }
 
 
+    // Отправка Лог-Ин дати
     let logInData = {
-      "user_email": inputEmailLogIn.value,
-      "password": inputPasswordLogIn.value
+      "user_email": inputEmailLogIn.value.value,
+      "password": inputPasswordLogIn.value.value
     };
 
-
     if (status) {
+      console.log(status);
       let promiseForResult = postData(loginServerURL, logInData);
       // console.log("Data has been send");
-      submitButtonLogIn.disabled = true
-
+      submitButtonLogIn.value.disabled = true
+      
       promiseForResult.then((data) => {
+        hiddenText.value.innerText = 'Loging you in, please wait...';
         if (data.isLoginSuccess == false) {
-          hiddenText.innerText = 'You aren`t registered';
 
-          swapClasses(hiddenText, "green", "red")
-          styleRemover(inputEmailLogIn)
-          styleRemover(inputPasswordLogIn)
 
-          clearInputs([inputEmailLogIn, inputPasswordLogIn])
+          swapClasses(hiddenText.value, "green", "red")
+          styleRemover(inputEmailLogIn.value)
+          styleRemover(inputPasswordLogIn.value)
 
-          submitButtonLogIn.disabled = false
+          clearInputs([inputEmailLogIn.value, inputPasswordLogIn.value])
+
+          submitButtonLogIn.value.disabled = false
           status = false
         }
       })
@@ -90,29 +94,28 @@ onMounted(() => {
   };
 
 
-
-
-  submitButtonSignUp.onclick = function () {
+  submitButtonSignUp.value.onclick = function () {
 
     // Проверка Имя в Sign-Up
-    checkInput(inputNameSignUp)
+    checkInput(inputNameSignUp.value)
 
     // ? Проверка Email в Sign-Up
-    checkInput(inputEmailSignUp)
+    checkInput(inputEmailSignUp.value)
 
 
     // Проверка Пароля в Sign-Up
-    checkInput(inputPasswordSignUp)
+    checkInput(inputPasswordSignUp.value)
 
     // Добавляем надпись Correct/Uncorrect
-    if (inputPasswordSignUp.value.length >= 8 && inputPasswordSignUp.value != "" && inputEmailSignUp.value.length >= 8 && inputEmailSignUp.value != "" && inputNameSignUp.value.length >= 8 && inputNameSignUp.value != "") {
-      hiddenText2.classList.add("green")
-      hiddenText2.innerText = 'Correct!';
+    if (inputPasswordSignUp.value.value.length >= 8 && inputPasswordSignUp.value.value != "" && inputEmailSignUp.value.value.length >= 8 && inputEmailSignUp.value.value != "" && inputNameSignUp.value.value.length >= 8 && inputNameSignUp.value.value != "") {
+      hiddenText2.value.classList.add("green")
+      hiddenText2.value.innerText = 'Correct!';
+      status2 = true
     }
     else {
-      hiddenText2.classList.remove("green")
-      hiddenText2.classList.add("red");
-      hiddenText2.innerText = 'Uncorrect!';
+      hiddenText2.value.classList.remove("green")
+      hiddenText2.value.classList.add("red");
+      hiddenText2.value.innerText = 'Uncorrect!';
     }
 
     let signUpData = {
@@ -121,19 +124,33 @@ onMounted(() => {
       "full_name": "string"
     };
 
-    signUpData.user_email = inputEmailSignUp.value;
-    signUpData.password = inputPasswordSignUp.value;
-    signUpData.full_name = inputNameSignUp.value;
-    // console.log(signUpValue);
+    signUpData.user_email = inputEmailSignUp.value.value;
+    signUpData.password = inputPasswordSignUp.value.value;
+    signUpData.full_name = inputNameSignUp.value.value;
+    if (status2) {
+      let promiseForResult = postData(registerServerURL, signUpData);
+      console.log("Data has been send");
+      submitButtonSignUp.value.disabled = true
 
+      promiseForResult.then((data) => {
+        if (data.userExist == false) {
+          hiddenText2.value.innerText = 'You aren`t registered';
 
-    postData(registerServerURL, signUpData);
+          swapClasses(hiddenText2.value, "green", "red")
+          styleRemover(inputEmailSignUp.value)
+          styleRemover(inputPasswordSignUp.value)
 
+          clearInputs([inputEmailSignUp.value, inputPasswordSignUp.value, inputNameSignUp.value])
 
-
-  }
-
-
+          submitButtonSignUp.value.disabled = false
+          status2 = false
+        }
+      })
+    }
+    else {
+      console.log("Error sending data");
+    }
+  };
 
 });
 
@@ -218,10 +235,11 @@ onMounted(() => {
           <!-- Forgot your password? -->
           <div class="forgot-password">Forgot your password?</div>
 
+          <!-- Google Button -->
 
-          <div class="g_id_signin button_google" data-type="standard" data-size="large" data-theme="filled_black"
+          <!-- <div class="g_id_signin button_google" data-type="standard" data-size="large" data-theme="filled_black"
             data-text="sign_in_with" data-shape="circle" data-logo_alignment="right">
-          </div>
+          </div> -->
         </div>
       </div>
     </section>
