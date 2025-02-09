@@ -27,8 +27,12 @@ function rotateForm() {
 
 
 onMounted(() => {
-  /* заменить на ref */
-// done
+  
+  let script = document.createElement("script");
+  script.src = "https://accounts.google.com/gsi/client";
+  script.async = true;
+  script.defer = true;
+  document.head.appendChild(script);
 
 
 
@@ -167,8 +171,8 @@ onMounted(() => {
           </div>
           <!-- Your Email -->
           <div class="pb-2 position-relative">
-            <input ref="inputEmailSignUp" type="email" name="logemail" class="form-style inputs" placeholder="Your Email"
-              id="logemail2" autocomplete="off">
+            <input ref="inputEmailSignUp" type="email" name="logemail" class="form-style inputs"
+              placeholder="Your Email" id="logemail2" autocomplete="off">
             <i class="input-icon uil uil-at"></i>
           </div>
           <!-- Your Password -->
