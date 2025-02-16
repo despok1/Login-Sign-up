@@ -46,6 +46,6 @@ def login(request: LoginRequest):
 def register(request: RegisterRequest):
     database = Database(user_email=request.user_email, password=request.password,full_name=request.full_name)
     result = database.registration()
-    return { "user_exist": result}
+    return { "userExist": result}
 
 
